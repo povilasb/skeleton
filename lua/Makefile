@@ -19,4 +19,4 @@ run:
 
 test:
 
-.PHONY: all run test
+.PHONY: all help run test
