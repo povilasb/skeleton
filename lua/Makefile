@@ -4,7 +4,9 @@ OUT_DIR = out
 MAIN_SCRIPT = main.lua
 LUA = lua
 
+
 all: help
+
 
 help:
 	@echo ""
@@ -14,9 +16,12 @@ help:
 	@echo "\ttest - runs tests."
 	@echo ""
 
+
 run:
 	$(LUA) $(SRC_DIR)/$(MAIN_SCRIPT)
 
+
 test:
+
 
 .PHONY: all help run test
