@@ -9,7 +9,8 @@ is it's argument."
 	echo ""
 	echo "Possible skeletons:"
 	echo "1. lua"
-	echo "2. c"
+	echo "2. c/exec"
+	echo "3. c/shared-library"
 }
 
 
