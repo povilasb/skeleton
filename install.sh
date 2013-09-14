@@ -9,6 +9,7 @@ is it's argument."
 	echo ""
 	echo "Possible skeletons:"
 	echo "1. lua"
+	echo "2. c"
 }
 
 
