@@ -35,4 +35,4 @@ clean:
 	rm -rf $(OUT_DIR)
 
 
-.PHONY: all compile run clean
+.PHONY: all run clean
