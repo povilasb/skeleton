@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Werror -pedantic -std=c++98
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c++11
 
 OUT_DIR = out
 SRC_DIR = src
