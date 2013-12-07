@@ -14,7 +14,7 @@ all: $(TARGET) run
 
 
 $(TARGET): $(OUT_DIR) $(OUT_OBJS)
-	$(CC) $(LDFLAGS) $(OUT_OBJS) -o $@
+	$(CC) $(OUT_OBJS) $(LDFLAGS) -o $@
 
 
 $(OUT_DIR):
