@@ -11,7 +11,8 @@ is it's argument."
 	echo "1. lua"
 	echo "2. c/exec"
 	echo "3. c/shared-library"
-	echo "3. c++"
+	echo "4. c++/make"
+	echo "5. c++/cmake"
 }
 
 
@@ -20,8 +21,9 @@ function install()
 	cp -r "$1" "$2"
 }
 
-if [ "$1" == "-h" ]; then
+
+if [ "$1" == "-h" ] || [ $# == 0 ]; then
 	print_help
-elif [ "$1" == "-i" ]; then
-	install $2 $3
+else
+	install $1 $2
 fi
