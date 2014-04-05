@@ -7,7 +7,8 @@ all: cmake
 .PHONY: all
 
 
-cmake: $(BUILD_DIR)
+cmake:
+	mkdir -p $(BUILD_DIR)
 	cd $(BUILD_DIR); cmake \
 		-D CMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 		$(CMAKE_DIR) ; \
@@ -15,7 +16,7 @@ cmake: $(BUILD_DIR)
 .PHONY: cmake
 
 
-test: $(BUILD_DIR)
+test: cmake
 	cd $(BUILD_DIR); cmake \
 		-D CMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 		$(CMAKE_DIR) ; \
