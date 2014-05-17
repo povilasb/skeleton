@@ -18,7 +18,7 @@ cmake:
 
 test: cmake
 	cd $(BUILD_DIR); cmake \
-		-D CMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+		-D CMAKE_BUILD_TYPE="Test" \
 		$(CMAKE_DIR) ; \
 		make build_test; \
 		make test

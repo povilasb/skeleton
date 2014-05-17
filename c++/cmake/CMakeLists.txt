@@ -36,9 +36,11 @@ enable_testing()
 set(TEST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 file(GLOB_RECURSE TEST_SRC_FILES "${TEST_SRC_DIR}/*.cpp")
 
-set(GTEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest")
-add_subdirectory(${GTEST_DIR})
-include_directories("${GTEST_DIR}/include")
+if (${CMAKE_BUILD_TYPE} STREQUAL "Test")
+	set(GTEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest")
+	add_subdirectory(${GTEST_DIR})
+	include_directories("${GTEST_DIR}/include")
+endif()
 
 
 add_custom_target(build_test COMMAND "")
