@@ -94,7 +94,8 @@
 		<delete dir="${build.dir}" failonerror="false" />
 		<delete dir="war/Main" failonerror="false" />
 		<delete dir="war/WEB-INF" failonerror="false" />
-	 </target>
+	</target>
+
 
 	<target name="codeserver" depends="javac"
 		description="Runs Code Server (superdevmode)">
