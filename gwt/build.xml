@@ -6,7 +6,7 @@
 	<property name="project.module-name" value="com.example.Main" />
 
 	<property name="build.dir" value="build" />
-	<property name="gwt.cache.dir" value="${build.dir}/gwt-unitCache" />
+	<property name="gwt.cache.dir" value="${build.dir}" />
 	<property name="codeserver.dir" value="${build.dir}/codeserver" />
 
 	<property name="test.src.dir" value="test" />
@@ -44,7 +44,8 @@
 	</target>
 
 
-	<target name="javac" description="Compile Java sources.">
+	<target name="javac" depends="resolve-deps"
+		description="Compile Java sources." >
 		<mkdir dir="${src.build.dir}"/>
 		<javac srcdir="${src.dir}" includes="**" encoding="utf-8"
 			destdir="${src.build.dir}"
