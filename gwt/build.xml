@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<project name="Example" xmlns:ivy="antlib:org.apache.ivy.ant"
-	default="build" basedir=".">
+<project name="Skeleton" xmlns:ivy="antlib:org.apache.ivy.ant"
+	default="build" basedir="." >
 
-	<property name="project.module-name" value="com.example.Main" />
+	<property name="project.module-name"
+		value="com.example.skeleton.Main" />
 
 	<property name="build.dir" value="build" />
 	<property name="gwt.cache.dir" value="${build.dir}" />
-	<property name="codeserver.dir" value="${build.dir}/codeserver" />
 
 	<property name="test.src.dir" value="test" />
 	<property name="test.build.dir" value="${build.dir}/classes/test" />
@@ -16,14 +16,12 @@
 	<property name="src.build.dir" value="${build.dir}/classes/src" />
 
 	<property name="libs.dir" value="lib" />
+	<property name="codeserver.dir" value="${build.dir}/codeserver" />
 
 	<!-- Arguments to gwtc and devmode targets -->
 	<!-- indirectly used by build and test targets (directly by javac) -->
 	<property name="gwt.args.release" value="-logLevel WARN -workDir
 		${build.dir}/compiler/ -optimize 9 -strict" />
-
-	<!-- makes environment variables available with env. prefix -->
-	<property environment="env" />
 
 	<!-- sets class path -->
 	<path id="project.class.path">
@@ -32,23 +30,20 @@
 	</path>
 
 
-	<!--
-	Resolve target used for easier library dependency
-	process.
-	-->
 	<target name="resolve-deps" description="Retrieve dependencies with
 		ivy.">
 		<mkdir dir="${libs.dir}" />
-		<ivy:retrieve conf="production" />
-		<ivy:retrieve conf="development" />
+		<ivy:retrieve conf="compile" />
+		<ivy:retrieve conf="debug" />
 	</target>
 
 
 	<target name="javac" depends="resolve-deps"
-		description="Compile Java sources." >
+		description="Compile java sources.">
+
 		<mkdir dir="${src.build.dir}"/>
-		<javac srcdir="${src.dir}" includes="**" encoding="utf-8"
-			destdir="${src.build.dir}"
+		<javac srcdir="src" includes="**" encoding="utf-8"
+				destdir="${src.build.dir}"
 				source="1.6" target="1.6"
 				nowarn="true"
 				debug="true"
@@ -72,26 +67,24 @@
 				value="${gwt.cache.dir}" />
 
 			<classpath>
-				<pathelement location="src/" />
+				<pathelement location="${src.dir}" />
+				<pathelement location="${src.build.dir}"/>
 				<path refid="project.class.path"/>
 			</classpath>
 
 			<jvmarg value="-Xmx256M"/>
 			<arg line="${gwt.args.release}"/>
 			<arg value="${project.module-name}"/>
-
 		</java>
-
 	</target>
 
 
-	<target name="build" depends="gwtc"
-		description="Builds this project, removes unused files from
-			war folder">
+	<target name="build" depends="gwtc" description="Builds this project,
+		removes unused files from war folder." >
 	</target>
 
 
-	<target name="clean" description="Cleans this project">
+	<target name="clean" description="Removes build files.">
 		<delete dir="${build.dir}" failonerror="false" />
 		<delete dir="war/Main" failonerror="false" />
 		<delete dir="war/WEB-INF" failonerror="false" />
@@ -99,7 +92,7 @@
 
 
 	<target name="codeserver" depends="javac"
-		description="Runs Code Server (superdevmode)">
+		description="Runs Code Server (superdevmode)i.">
 
 		<mkdir dir="${codeserver.dir}" />
 
@@ -107,8 +100,8 @@
 			classname="com.google.gwt.dev.codeserver.CodeServer">
 
 			<classpath>
-				<pathelement location="src"/>
-				<path refid="project.class.path"/>
+				<pathelement location="${src.dir}" />
+				<path refid="project.class.path" />
 			</classpath>
 
 			<jvmarg value="-Xmx1024M"/>
@@ -118,9 +111,66 @@
 			<arg value="9876"/>
 			<arg value="-workDir"/>
 			<arg value="${codeserver.dir}" />
-			<arg line="-src"/>
+			<arg line="-src" />
 			<arg value="${src.dir}" />
-			<arg value="${project.module-nam}" />
+			<arg value="${project.module-name}" />
 		</java>
 	</target>
+
+
+	<!-- Testing targets. -->
+
+	<target name="javac.test" depends="javac"
+		description="Compiles test code.">
+
+		<mkdir dir="${test.build.dir}" />
+		<javac srcdir="${test.src.dir}"
+			includes="**"
+			encoding="utf-8"
+			destdir="${test.build.dir}"
+			source="1.6" target="1.6"
+			nowarn="true"
+			debug="true"
+			debuglevel="lines,vars,source"
+			listfiles="yes"
+			includeantruntime="false">
+
+			<classpath>
+				<path refid="project.class.path"/>
+			</classpath>
+			<compilerarg value="-Xlint:all"/>
+		</javac>
+	</target>
+
+
+	<target name="html-test-utils-config" >
+		<copy todir="${test.build.dir}/META-INF" >
+			<fileset dir="${test.src.dir}/META-INF" />
+		</copy>
+	</target>
+
+
+	<target name="test" depends="javac.test,html-test-utils-config"
+		description="Run tests.">
+
+		<junit haltonfailure="false" includeantruntime="false"
+			fork="yes" forkmode="once" >
+			<sysproperty key="gwt.persistentunitcachedir"
+				value="${gwt.cache.dir}" />
+
+			<classpath>
+				<path refid="project.class.path" />
+				<pathelement location="${test.build.dir}" />
+				<pathelement location="${src.dir}" />
+			</classpath>
+
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${test.src.dir}" />
+			</batchtest>
+		</junit>
+	</target>
+
+
+>>>>>>> Refactors ant build script.
 </project>
