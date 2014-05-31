@@ -4,7 +4,7 @@
 	default="build" basedir="." >
 
 	<property name="project.module-name"
-		value="com.example.skeleton.Main" />
+		value="com.example.Main" />
 
 	<property name="build.dir" value="build" />
 	<property name="gwt.cache.dir" value="${build.dir}" />
