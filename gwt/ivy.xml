@@ -16,6 +16,9 @@
 			rev="1.0.0.GA" />
 
 		<!-- development -->
+		<dependency org="com.google.gwt" name="gwt-codeserver"
+			rev="2.6.1" conf="debug->default" />
+
 		<dependency org="junit" name="junit" rev="4.11"
 			conf="debug->default" />
 
