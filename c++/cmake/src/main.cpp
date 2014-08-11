@@ -1,13 +1,10 @@
 #include <iostream>
 
 
-using namespace std;
-
-
 int
 main(void)
 {
-	cout << "Entrypoint" << endl;
+	std::cout << "Entrypoint" << std::endl;
 
 	return 0;
 }
