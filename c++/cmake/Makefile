@@ -13,6 +13,7 @@ all:
 	@echo "\tmake debug"
 	@echo "\tmake test"
 	@echo "\tmake test-memleaks"
+	@echo "\tmake docs"
 .PHONY: all
 
 
@@ -72,3 +73,9 @@ run-release:
 run-debug:
 	./$(BUILD_DIR)/debug/$(OUTPUT_EXEC)
 .PHONY: run-debug
+
+
+docs:
+	mkdir -p $(BUILD_DIR)
+	doxygen Doxyfile
+.PHONY: docs
