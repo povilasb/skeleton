@@ -33,7 +33,7 @@ release:
 
 
 debug:
-	BUILD_TYPE=Debug BUILD_DIR=build/debug $(MAKE) build
+	BUILD_TYPE=Debug BUILD_DIR=build/debug CXX=clang++ $(MAKE) build
 .PHONY: debug
 
 
