@@ -14,6 +14,8 @@ all:
 	@echo "\tmake test"
 	@echo "\tmake test-memleaks"
 	@echo "\tmake docs"
+	@echo "\tmake run-release"
+	@echo "\tmake run-debug"
 .PHONY: all
 
 
