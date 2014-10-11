@@ -2,17 +2,12 @@ cmake_minimum_required(VERSION 2.6)
 
 # Configurable.
 
-if (NOT DEFINED PROJECT_NAME)
-	set(PROJECT_NAME "skeleton")
-endif(NOT DEFINED PROJECT_NAME)
+project(skeleton CXX)
+set(PROJECT_EXEC "main")
+set(PROJECT_LIB "libmain")
 
 option(SKELETON_ENABLE_TESTS "Enables or disables tests. Disabled by default."
 	OFF)
-
-
-project(${PROJECT_NAME} CXX)
-set(PROJECT_EXEC "${PROJECT_NAME}")
-set(PROJECT_LIB "lib${PROJECT_NAME}")
 
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}.")
