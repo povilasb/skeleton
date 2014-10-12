@@ -15,6 +15,7 @@ all:
 	@echo "\tmake docs"
 	@echo "\tmake run-release"
 	@echo "\tmake run-debug"
+	@echo "\tmake clean"
 .PHONY: all
 
 
