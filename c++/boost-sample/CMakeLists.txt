@@ -25,7 +25,7 @@ set(LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 # Find Boost libs.
 set(Boost_NO_SYSTEM_PATHS ON)
 set(BOOST_INCLUDEDIR "${LIBS_DIR}/boost")
-set(BOOST_LIBRARYDIR "${LIBS_DIR}boost/libs")
+set(BOOST_LIBRARYDIR "${LIBS_DIR}/boost/libs")
 find_package(Boost 1.56.0)
 include_directories("${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost include dir: ${Boost_INCLUDE_DIRS}")
