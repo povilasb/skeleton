@@ -1,10 +1,8 @@
-BUILD_DIR ?= build
-BUILD_TYPE ?= Debug
-BUILD_TESTS ?= OFF
-CMAKE_DIR = $(CURDIR)
+build_type ?= Debug
+build_type_lower = ${shell echo ${build_type} | tr "[:upper:]" "[:lower:]"}
 
-PROJECT_NAME = main
-OUTPUT_EXEC = $(PROJECT_NAME)
+build_dir ?= build/${build_type_lower}
+cmake_dir := $(CURDIR)
 
 
 all:
@@ -17,21 +15,19 @@ all:
 
 
 build:
-	mkdir -p $(BUILD_DIR) ; cd $(BUILD_DIR) ; \
-		cmake \
-		-D CMAKE_BUILD_TYPE=$(BUILD_TYPE) \
-		-D PROJECT_NAME=$(PROJECT_NAME) \
-		$(CMAKE_DIR) ; make
+	mkdir -p $(build_dir) && cd $(build_dir) && cmake \
+		-D CMAKE_BUILD_TYPE=$(build_type) \
+		$(cmake_dir) && make
 .PHONY: build
 
 
 release:
-	BUILD_TYPE=Release BUILD_DIR=build/release $(MAKE) build
+	build_type=Release $(MAKE) build
 .PHONY: release
 
 
 debug:
-	BUILD_TYPE=Debug BUILD_DIR=build/debug $(MAKE) build
+	build_type=Debug $(MAKE) build
 .PHONY: debug
 
 
@@ -41,10 +37,15 @@ clean:
 
 
 run-release:
-	./$(BUILD_DIR)/release/$(OUTPUT_EXEC)
+	build_type=Release $(MAKE) run
 .PHONY: run-release
 
 
 run-debug:
-	./$(BUILD_DIR)/debug/$(OUTPUT_EXEC)
+	build_type=Debug $(MAKE) run
 .PHONY: run-debug
+
+
+%:
+	make -C $(build_dir) $@
+.PHONY:
