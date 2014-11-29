@@ -27,6 +27,6 @@ message(STATUS "Boost libraries: ${Boost_LIBRARIES}")
 set(src_dir "${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(GLOB_RECURSE src_files "${src_dir}/*.cpp")
 
-add_executable("${project_exec}" "${src_files}")
+add_executable("${project_exec}" ${src_files})
 
 add_custom_target(run COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${project_exec})
