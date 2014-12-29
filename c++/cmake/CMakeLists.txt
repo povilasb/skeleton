@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.6)
 # Configurable.
 
 project(skeleton CXX)
-set(PROJECT_EXEC "main")
-set(PROJECT_LIB "libmain")
+set(project_exec "main")
+set(project_lib "libmain")
 
 option(SKELETON_ENABLE_TESTS "Enables or disables tests. Disabled by default."
 	OFF)
@@ -24,52 +24,17 @@ file(GLOB_RECURSE SRC_FILES "${SRC_DIR}/*.cpp")
 set(MAIN_SRC "${SRC_DIR}/main.cpp")
 list(REMOVE_ITEM SRC_FILES "${MAIN_SRC}")
 
-add_library("${PROJECT_LIB}" STATIC ${SRC_FILES})
-set_target_properties(${PROJECT_LIB} PROPERTIES
+add_library("${project_lib}" STATIC ${SRC_FILES})
+set_target_properties(${project_lib} PROPERTIES
 	OUTPUT_NAME ${PROJECT_NAME})
 
-add_executable("${PROJECT_EXEC}" "${MAIN_SRC}")
-target_link_libraries("${PROJECT_EXEC}" "${PROJECT_LIB}")
+add_executable("${project_exec}" "${MAIN_SRC}")
+target_link_libraries("${project_exec}" "${project_lib}")
 
 
-#
-# Testing rules.
-#
+add_custom_target(run COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${project_exec})
+
 
 if (SKELETON_ENABLE_TESTS)
-
-	set(TEST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
-	file(GLOB_RECURSE TEST_SRC_FILES "${TEST_SRC_DIR}/*.cpp")
-
-	set(GTEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest")
-	add_subdirectory(${GTEST_DIR})
-	include_directories("${GTEST_DIR}/include")
-
-
-	add_custom_target(run-tests COMMAND "")
-	add_custom_target(run-memleak-tests COMMAND "")
-
-	find_program(VALGRIND "valgrind")
-
-	foreach(TEST_SRC ${TEST_SRC_FILES})
-		get_filename_component(TEST_NAME "${TEST_SRC}" NAME_WE)
-
-		add_executable("${TEST_NAME}" ${TEST_SRC})
-		add_dependencies("${TEST_NAME}" "${PROJECT_LIB}")
-		target_link_libraries(${TEST_NAME} "gtest" "gtest_main"
-			${ALL_LIBS})
-
-		set(TEST_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/Testing/bin")
-		set_target_properties("${TEST_NAME}" PROPERTIES
-			RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_DIR}")
-
-		add_custom_command(TARGET run-tests
-			COMMAND "${TEST_OUTPUT_DIR}/${TEST_NAME}")
-
-		add_custom_command(TARGET run-memleak-tests
-			COMMAND "${VALGRIND}"
-			ARGS "--leak-check=full"
-				"${TEST_OUTPUT_DIR}/${TEST_NAME}"
-		)
-	endforeach()
+	add_subdirectory(test)
 endif()
