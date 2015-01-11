@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
 
-# Configurable.
-
 project(skeleton CXX)
 set(project_exec "main")
 set(project_lib "libmain")
