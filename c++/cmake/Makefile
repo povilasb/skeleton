@@ -11,7 +11,6 @@ all:
 	@echo "Usage:"
 	@echo "\tmake release"
 	@echo "\tmake debug"
-	@echo "\tmake docs"
 	@echo "\tmake run"
 	@echo "\tmake test"
 	@echo "\tmake clean"
@@ -46,12 +45,6 @@ test:
 clean:
 	rm -rf build
 .PHONY: clean
-
-
-docs:
-	mkdir -p $(build_dir)
-	doxygen Doxyfile
-.PHONY: docs
 
 
 # Redirect all undefined targets to cmake.
